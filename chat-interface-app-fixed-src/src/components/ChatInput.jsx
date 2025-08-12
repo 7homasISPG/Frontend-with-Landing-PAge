@@ -1,30 +1,88 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Send, Paperclip, Mic } from 'lucide-react';
+import { Send, Paperclip, Mic, MicOff } from 'lucide-react';
 
 const ChatInput = ({ input, setInput, onSendMessage, onFileUpload, fileInputRef, isLoading }) => {
+    const [isRecording, setIsRecording] = useState(false);
+    const recognitionRef = useRef(null);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!input.trim()) return;
         onSendMessage(input);
+        setInput('');
+    };
+
+    // Start voice recording
+    const startRecording = () => {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            alert('Speech recognition is not supported in this browser.');
+            return;
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.interimResults = true;
+        recognition.continuous = false;
+
+        recognition.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            setInput(transcript);
+        };
+
+        recognition.onend = () => {
+            setIsRecording(false);
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error:', event.error);
+            setIsRecording(false);
+        };
+
+        recognition.start();
+        recognitionRef.current = recognition;
+        setIsRecording(true);
+    };
+
+    // Stop voice recording
+    const stopRecording = () => {
+        if (recognitionRef.current) {
+            recognitionRef.current.stop();
+        }
+    };
+
+    const toggleRecording = () => {
+        if (isRecording) {
+            stopRecording();
+        } else {
+            startRecording();
+        }
     };
 
     return (
         <Card className="shadow-lg border border-gray-200">
             <CardContent className="p-3">
                 <form onSubmit={handleSubmit} className="flex items-center space-x-3">
+                    {/* Attach File */}
                     <Button
                         type="button"
                         variant="ghost"
                         size="sm"
                         onClick={() => fileInputRef.current?.click()}
                         className="text-gray-600 hover:text-gray-800 px-3"
+                        disabled={isLoading}
                     >
                         <Paperclip className="h-4 w-4 mr-1" />
                         Attach
                     </Button>
-                    
+
+                    {/* Text Input */}
                     <div className="flex-1">
                         <Input
                             value={input}
@@ -34,16 +92,21 @@ const ChatInput = ({ input, setInput, onSendMessage, onFileUpload, fileInputRef,
                             disabled={isLoading}
                         />
                     </div>
-                    
+
+                    {/* Mic Button */}
                     <Button
                         type="button"
-                        variant="ghost"
+                        variant={isRecording ? 'destructive' : 'ghost'}
                         size="sm"
-                        className="text-gray-600 hover:text-gray-800 p-2"
+                        onClick={toggleRecording}
+                        disabled={isLoading}
+                        className="p-2"
+                        title={isRecording ? 'Stop Recording' : 'Start Voice Input'}
                     >
-                        <Mic className="h-5 w-5" />
+                        {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
                     </Button>
-                    
+
+                    {/* Send Button */}
                     <Button
                         type="submit"
                         size="sm"
@@ -53,7 +116,8 @@ const ChatInput = ({ input, setInput, onSendMessage, onFileUpload, fileInputRef,
                         <Send className="h-4 w-4" />
                     </Button>
                 </form>
-                
+
+                {/* Hidden File Input */}
                 <input
                     type="file"
                     ref={fileInputRef}
@@ -66,4 +130,3 @@ const ChatInput = ({ input, setInput, onSendMessage, onFileUpload, fileInputRef,
 };
 
 export default ChatInput;
-
