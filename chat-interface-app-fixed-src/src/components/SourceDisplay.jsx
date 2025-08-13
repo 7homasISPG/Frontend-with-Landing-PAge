@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, FileText, Globe } from 'lucide-react';
@@ -23,7 +23,8 @@ const SourceDisplay = ({ sources = [] }) => {
     };
 
     return (
-        <div className="h-full overflow-y-auto p-4">
+        <div className="h-full flex flex-col p-4">
+            {/* Header */}
             <div className="mb-4">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Sources</h3>
                 <p className="text-sm text-gray-600">
@@ -31,15 +32,19 @@ const SourceDisplay = ({ sources = [] }) => {
                 </p>
             </div>
 
-            <div className="space-y-3">
+            {/* Scrollable source list */}
+            <div className="flex-1 overflow-y-auto space-y-3">
                 {sources.map((source, index) => {
                     const sourceUrl = source.source || source.url;
                     const domain = getHostname(sourceUrl);
                     const fallbackImage = `https://image.thum.io/get/width/600/crop/600/noanimate/${sourceUrl}`;
 
                     return (
-                        <Card key={index} className="border border-gray-200 hover:border-blue-300 transition-colors">
-                            <CardHeader className="pb-2">
+                        <Card
+                            key={index}
+                            className="border border-gray-200 hover:border-blue-300 transition-colors flex flex-col h-[calc(100%-1rem)]"
+                        >
+                            <CardHeader className="pb-2 flex-shrink-0">
                                 <div className="flex items-start justify-between">
                                     <Badge variant="secondary" className="text-xs max-w-[120px] truncate">
                                         {domain}
@@ -55,24 +60,24 @@ const SourceDisplay = ({ sources = [] }) => {
                                 </div>
                             </CardHeader>
 
-                            <CardContent className="pt-0 space-y-2">
-                                <div className="flex items-center space-x-2">
+                            <CardContent className="pt-0 flex flex-col flex-1">
+                                <div className="flex items-center space-x-2 mb-2">
                                     <Globe className="h-4 w-4 text-gray-400" />
                                     <span className="text-sm text-gray-600 truncate">{domain}</span>
                                 </div>
 
                                 {source.title && (
-                                    <h4 className="text-sm font-medium text-gray-900 line-clamp-2">
+                                    <h4 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
                                         {source.title}
                                     </h4>
                                 )}
 
                                 {source.snippet && (
-                                    <p className="text-xs text-gray-600 line-clamp-3">{source.snippet}</p>
+                                    <p className="text-xs text-gray-600 line-clamp-3 mb-2">{source.snippet}</p>
                                 )}
 
-                                {/* Embed iframe with fallback image */}
-                                <div className="w-full h-64 relative border rounded overflow-hidden">
+                                {/* Flexible iframe container */}
+                                <div className="relative border rounded overflow-hidden flex-1">
                                     <iframe
                                         src={sourceUrl}
                                         className="absolute top-0 left-0 w-full h-full"
@@ -102,5 +107,3 @@ const SourceDisplay = ({ sources = [] }) => {
 };
 
 export default SourceDisplay;
-
-
