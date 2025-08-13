@@ -53,7 +53,7 @@ const ChatInterface = ({
         if (!query.trim() || isLoading) return;
         if (!conversationStarted) setConversationStarted(true);
 
-        const userMessage = { role: 'user', content: { text: query } };
+        const userMessage = { role: 'user', content: { text: query },timestamp: new Date().toISOString() };
         setMessages(prev => [...prev, userMessage]);
         setInput('');
         setIsLoading(true);
@@ -100,7 +100,7 @@ const ChatInterface = ({
                 console.error('Error setting up request:', error.message);
             }
 
-            const errorMessage = { role: 'assistant', content: { type: 'answer', text: errorMessageText } };
+            const errorMessage = { role: 'assistant', content: { type: 'answer', text: errorMessageText,timestamp: new Date().toISOString() } };
             setMessages(prev => [...prev, errorMessage]);
         } finally {
             setIsLoading(false);
