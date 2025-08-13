@@ -222,7 +222,7 @@ const TopBar = ({ isAuthenticated }) => {
                         <div className="flex items-center">
                             <Link to="/" className="flex items-center">
                                 <img
-                                    src="/First_Drive_logo.png"
+                                    src="/oorjit_logo.png"
                                     alt="First Drive Centre Logo"
                                     className="h-10 w-auto"
                                     loading="eager"

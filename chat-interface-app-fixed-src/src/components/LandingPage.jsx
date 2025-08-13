@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Zap, Shield, Link, CheckCircle, Star, Users, Globe } from 'lucide-react';
 
@@ -30,12 +31,15 @@ const LandingPage = () => {
             variants={staggerContainer}
           >
             <motion.div variants={fadeInUp} className="mb-8">
-              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-purple-100 text-purple-800 mb-6">
+              <NavLink
+                to="/ai-assistance"
+                className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-purple-100 text-purple-800 mb-6"
+              >
                 <Zap className="w-4 h-4 mr-2" />
                 AI Mode for Your Website
-              </span>
+              </NavLink>
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                HappyPlace.ai
+                Oorjit.ai
                 <span className="block mt-2  bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                   Task-Focused & Action-Oriented
                 </span>
@@ -107,41 +111,41 @@ const LandingPage = () => {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-          <motion.div
-    variants={fadeInUp}
-    className="bg-red-900/20 border border-red-500/30 rounded-xl p-6 flex flex-col items-center text-center"
-  >
-    <div className="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center mb-4">
-      <Shield className="w-6 h-6 text-red-400" />
-    </div>
-    <h3 className="text-xl font-semibold text-white mb-3">
-      Generic Replies, High Hallucinations
-    </h3>
-  </motion.div>
+            <motion.div
+                variants={fadeInUp}
+                className="bg-red-900/20 border border-red-500/30 rounded-xl p-6 flex flex-col items-center text-center"
+              >
+                <div className="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-red-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  Generic Replies, High Hallucinations
+                </h3>
+            </motion.div>
 
-  <motion.div
-    variants={fadeInUp}
-    className="bg-orange-900/20 border border-orange-500/30 rounded-xl p-6 flex flex-col items-center text-center"
-  >
-    <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mb-4">
-      <Zap className="w-6 h-6 text-orange-400" />
-    </div>
-    <h3 className="text-xl font-semibold text-white mb-3">
-      Limited Actions
-    </h3>
-  </motion.div>
+            <motion.div
+              variants={fadeInUp}
+              className="bg-orange-900/20 border border-orange-500/30 rounded-xl p-6 flex flex-col items-center text-center"
+            >
+              <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mb-4">
+                <Zap className="w-6 h-6 text-orange-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">
+                Limited Actions
+              </h3>
+            </motion.div>
 
-<motion.div
-  variants={fadeInUp}
-  className="bg-yellow-900/20 border border-yellow-500/30 rounded-xl p-6 flex flex-col items-center text-center"
->
-  <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4">
-    <Globe className="w-6 h-6 text-yellow-400" />
-  </div>
-  <h3 className="text-xl font-semibold text-white mb-3">
-    Slow, Complex Integration
-  </h3>
-</motion.div>
+            <motion.div
+              variants={fadeInUp}
+              className="bg-yellow-900/20 border border-yellow-500/30 rounded-xl p-6 flex flex-col items-center text-center"
+            >
+              <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4">
+                <Globe className="w-6 h-6 text-yellow-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">
+                Slow, Complex Integration
+              </h3>
+            </motion.div>
 
           </motion.div>
         </div>
