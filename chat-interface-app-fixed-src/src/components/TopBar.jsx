@@ -265,10 +265,6 @@ const TopBar = ({ isAuthenticated }) => {
                             <PlayCircle className="h-4 w-4 mr-1" aria-hidden="true" />
                             Demo Hub
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600 text-sm transition-colors duration-200">
-                                <Briefcase className="h-4 w-4 mr-1" aria-hidden="true" />
-                                Careers
-                            </Button>
                         </nav>
 
                         {/* Auth Buttons & Mobile Menu */}
